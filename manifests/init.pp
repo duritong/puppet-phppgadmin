@@ -7,36 +7,38 @@
 class phppgadmin {
 
     case $operatingsystem {
-        gentoo: { include webapp-config }
+        gentoo: { include phppgadmin::gentoo }
+        default: { include phppgadmin::base }
     }
     
-    $modulename = "phppgadmin"
-    $pkgname = "phppgadmin"
-    $gentoocat = "dev-db"
-    $cnfname = "config.inc.php"
-    $cnfpath = "/var/www/localhost/htdocs/phppgadmin/conf"
 
-    package { $pkgname:
+class phppgadmin::base {
+    package { phppgadmin:
         ensure => present,
-        category => $operatingsystem ? {
-            gentoo => $gentoocat,
-            default => '',
-        }
     }
 
-    file{
-        "${cnfpath}/${cnfname}":
+    file{ phppgadmin_config:
+            path => "/var/www/localhost/htdocs/phppgadmin/conf/config.inc.php",
             source => [
-                "puppet://$server/dist/${modulename}/${fqdn}/${cnfname}",
-                "puppet://$server/${modulename}/${fqdn}/${cnfname}",
-                "puppet://$server/${modulename}/${cnfname}"
+                "puppet://$server/files/phppgadmin/${fqdn}/config.inc.php",
+                "puppet://$server/files/phppgadmin/config.inc.php",
+                "puppet://$server/phppgadmin/config.inc.php"
             ],
             ensure => file,
             owner => root,
             group => 0,
             mode => 0444,
-            require => Package[$pkgname],
+            require => Package[phppgadmin],
     }
 
 }
 
+class phppgadmin::gentoo inherits phppgadmin::base {
+
+    include webapp-config
+
+    Package[phppgadmin]{
+        category => 'dev-db',
+        require => Package[webapp-config],
+    }
+}
