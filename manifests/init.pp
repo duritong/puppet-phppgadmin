@@ -10,7 +10,7 @@ class phppgadmin {
         gentoo: { include phppgadmin::gentoo }
         default: { include phppgadmin::base }
     }
-    
+}    
 
 class phppgadmin::base {
     package { phppgadmin:
