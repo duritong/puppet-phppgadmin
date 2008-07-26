@@ -8,6 +8,7 @@ class phppgadmin {
 
     case $operatingsystem {
         gentoo: { include phppgadmin::gentoo }
+        centos: { include phppgadmin::centos }
         default: { include phppgadmin::base }
     }
 }    
@@ -15,6 +16,7 @@ class phppgadmin {
 class phppgadmin::base {
     package { phppgadmin:
         ensure => present,
+        require => Package[php],
     }
 
     file{ phppgadmin_config:
@@ -40,5 +42,16 @@ class phppgadmin::gentoo inherits phppgadmin::base {
     Package[phppgadmin]{
         category => 'dev-db',
         require => Package[webapp-config],
+    }
+}
+
+class phpgadmin::centos inherits phppgadmin::base {
+    Package[phppgadmin]{
+        name => 'phpPgAdmin',
+        require +> Package[php-pgsql],
+    }
+
+    File[phpgaadmin_config]{
+        path => '/etc/phpPgAdmin/config.inc.php',
     }
 }
