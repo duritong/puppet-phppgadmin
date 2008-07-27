@@ -14,6 +14,8 @@ class phppgadmin {
 }    
 
 class phppgadmin::base {
+    include php
+
     package { phppgadmin:
         ensure => present,
         require => Package[php],
