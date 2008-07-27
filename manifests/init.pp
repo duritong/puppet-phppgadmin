@@ -51,7 +51,7 @@ class phppgadmin::centos inherits phppgadmin::base {
         require +> Package[php-pgsql],
     }
 
-    File[phpgaadmin_config]{
+    File[phppgaadmin_config]{
         path => '/etc/phpPgAdmin/config.inc.php',
     }
 }
