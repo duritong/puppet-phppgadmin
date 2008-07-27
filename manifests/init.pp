@@ -45,7 +45,7 @@ class phppgadmin::gentoo inherits phppgadmin::base {
     }
 }
 
-class phpgadmin::centos inherits phppgadmin::base {
+class phppgadmin::centos inherits phppgadmin::base {
     Package[phppgadmin]{
         name => 'phpPgAdmin',
         require +> Package[php-pgsql],
