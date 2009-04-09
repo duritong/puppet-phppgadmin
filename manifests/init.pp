@@ -16,6 +16,7 @@ class phppgadmin {
 class phppgadmin::base {
     include php
     include php::pgsql
+    include postgres::client
 
     package { phppgadmin:
         ensure => present,
