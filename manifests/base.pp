@@ -13,7 +13,7 @@ class phppgadmin::base {
             source => [
                 "puppet://$server/files/phppgadmin/${fqdn}/config.inc.php",
                 "puppet://$server/files/phppgadmin/config.inc.php",
-                "puppet://$server/phppgadmin/config.inc.php"
+                "puppet://$server/modules/phppgadmin/config.inc.php"
             ],
             ensure => file,
             owner => root,
