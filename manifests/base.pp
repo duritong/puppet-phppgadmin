@@ -11,9 +11,9 @@ class phppgadmin::base {
     file{ phppgadmin_config:
             path => "/var/www/localhost/htdocs/phppgadmin/conf/config.inc.php",
             source => [
-                "puppet://$server/modules/site-phppgadmin/${fqdn}/config.inc.php",
-                "puppet://$server/modules/site-phppgadmin/config.inc.php",
-                "puppet://$server/modules/phppgadmin/config.inc.php"
+                "puppet:///modules/site-phppgadmin/${fqdn}/config.inc.php",
+                "puppet:///modules/site-phppgadmin/config.inc.php",
+                "puppet:///modules/phppgadmin/config.inc.php"
             ],
             ensure => file,
             owner => root,
