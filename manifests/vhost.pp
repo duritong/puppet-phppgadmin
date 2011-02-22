@@ -21,7 +21,7 @@ define phppgadmin::vhost(
     path_is_webdir => true,
     ssl_mode => $ssl_mode,
     template_partial => 'phppgadmin/vhost/php_stuff.erb',
-    require => Package['phpPgAdmin'],
+    require => Package['phppgadmin'],
   }
 
   if $use_nagios {
