@@ -16,7 +16,7 @@ define phppgadmin::vhost(
     },
     logpath => $operatingsystem ? {
       gentoo => '/var/log/apache2/',
-      default => '/var/logs/httpd'
+      default => '/var/log/httpd'
     },
     manage_webdir => false,
     path_is_webdir => true,
