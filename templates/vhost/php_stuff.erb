@@ -1,10 +1,10 @@
   <Directory "<%= documentroot %>/">
-        Allow from all
-        php_admin_flag engine on
-        php_admin_flag safe_mode On
-        php_admin_value open_basedir <%= documentroot %>/:/etc/phpPgAdmin/:/var/www/upload_tmp_dir/<%= name %>/:/var/www/session.save_path/<%= name %>
-        php_admin_value upload_tmp_dir /var/www/upload_tmp_dir/<%= name %>/
-        php_admin_value session.save_path /var/www/session.save_path/<%= name %>/
-        php_admin_value safe_mode_allowed_env_vars PHP_,PG
-        php_admin_value safe_mode_exec_dir <%= php_safe_mode_exec_bin_dir %>/
+    Allow from all
+    php_admin_flag engine on
+    php_admin_flag safe_mode On
+    php_admin_value open_basedir <%= documentroot %>/:/etc/phpPgAdmin/:/var/www/upload_tmp_dir/<%= name %>/:/var/www/session.save_path/<%= name %>
+    php_admin_value upload_tmp_dir /var/www/upload_tmp_dir/<%= name %>/
+    php_admin_value session.save_path /var/www/session.save_path/<%= name %>/
+    php_admin_value safe_mode_allowed_env_vars PHP_,PG
+    php_admin_value safe_mode_exec_dir <%= php_safe_mode_exec_bin_dir %>/
   </Directory>
