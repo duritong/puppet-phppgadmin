@@ -8,7 +8,7 @@ define phppgadmin::vhost(
   include ::apache::vhost::php::global_exec_bin_dir
   apache::vhost::php::standard{$name:
     ensure => $ensure,
-    domainalias => $domanalias,
+    domainalias => $domainalias,
     manage_docroot => false,
     path => $operatingsystem ? {
       gentoo => '/var/www/localhost/htdocs/phppgadmin',
