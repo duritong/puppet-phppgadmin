@@ -2,7 +2,8 @@ define phppgadmin::vhost(
   $ensure = 'present',
   $domainalias = 'absent',
   $ssl_mode = 'force',
-  $monitor_url = 'absent'
+  $monitor_url = 'absent',
+  $logmode = 'default'
 ){
   include ::phppgadmin::vhost::absent_webconfig
   include ::apache::vhost::php::global_exec_bin_dir
@@ -18,6 +19,7 @@ define phppgadmin::vhost(
       gentoo => '/var/log/apache2/',
       default => '/var/log/httpd'
     },
+    logmode => $logmode,
     manage_webdir => false,
     path_is_webdir => true,
     ssl_mode => $ssl_mode,
