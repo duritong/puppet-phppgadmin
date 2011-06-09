@@ -27,6 +27,7 @@ define phppgadmin::vhost(
     require => Package['phppgadmin'],
     php_safe_mode_exec_bin_dir => "/var/www/php_safe_exec_bins/${name}",
     php_safe_mode_exec_bins => [ '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ],
+    mod_security => false,
   }
 
   if $use_nagios {
