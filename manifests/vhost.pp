@@ -8,12 +8,31 @@ define phppgadmin::vhost(
   $run_gid = 'apache',
   $logmode = 'default'
 ){
-  include ::phppgadmin::vhost::absent_webconfig
-  include ::apache::vhost::php::global_exec_bin_dir
+
   $documentroot = $operatingsystem ? {
     gentoo => '/var/www/localhost/htdocs/phppgadmin',
     default => '/usr/share/phpPgAdmin'
   }
+
+  if ($run_mode == 'fcgid'){
+    if (($run_uid == 'absent') or ($run_gid == 'absent')) { fail("Need to configure \$run_uid and \$run_gid if you want to run Phppgadmin::Vhost[${name}] as fcgid.") }
+
+    user::managed{$name:
+      ensure => $ensure,
+      uid => $run_uid,
+      gid => $run_gid,
+      managehome => false,
+      homedir => $documentroot,
+      shell => $operatingsystem ? {
+        debian => '/usr/sbin/nologin',
+        ubuntu => '/usr/sbin/nologin',
+        default => '/sbin/nologin'
+      },
+      before => ApacheVhost::Php::Standard[$name],
+    }
+  }
+  include ::phppgadmin::vhost::absent_webconfig
+  include ::apache::vhost::php::global_exec_bin_dir
   apache::vhost::php::standard{$name:
     ensure => $ensure,
     domainalias => $domainalias,
@@ -30,7 +49,7 @@ define phppgadmin::vhost(
     run_mode => $run_mode,
     run_uid => $run_uid,
     run_gid => $run_gid,
-    template_partial => 'phppgadmin/vhost/php_stuff.erb',
+    template_partial => 'apache/vhosts/php/partial.erb',
     require => Package['phppgadmin'],
     php_settings => {
       open_basedir               => "${documentroot}/:/etc/phpPgAdmin/:/var/www/upload_tmp_dir/${name}/:/var/www/session.save_path/${name}/",
