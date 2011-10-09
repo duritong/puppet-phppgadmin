@@ -25,8 +25,8 @@ define phppgadmin::vhost(
     ssl_mode => $ssl_mode,
     template_partial => 'phppgadmin/vhost/php_stuff.erb',
     require => Package['phppgadmin'],
-    php_safe_mode_exec_bin_dir => "/var/www/php_safe_exec_bins/${name}",
-    php_safe_mode_exec_bins => [ '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ],
+    php_settings => { safe_mode_exec_dir => "/var/www/php_safe_exec_bins/${name}" },
+    php_options => { safe_mode_exec_bins => [ '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ] },
     mod_security => false,
   }
 
