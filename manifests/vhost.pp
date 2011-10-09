@@ -11,14 +11,14 @@ define phppgadmin::vhost(
   include ::phppgadmin::vhost::absent_webconfig
   include ::apache::vhost::php::global_exec_bin_dir
   $documentroot = $operatingsystem ? {
-      gentoo => '/var/www/localhost/htdocs/phppgadmin',
-      default => '/usr/share/phpPgAdmin'
-    }
+    gentoo => '/var/www/localhost/htdocs/phppgadmin',
+    default => '/usr/share/phpPgAdmin'
+  }
   apache::vhost::php::standard{$name:
     ensure => $ensure,
     domainalias => $domainalias,
     manage_docroot => false,
-    path => $documentroo,
+    path => $documentroot,
     logpath => $operatingsystem ? {
       gentoo => '/var/log/apache2/',
       default => '/var/log/httpd'
