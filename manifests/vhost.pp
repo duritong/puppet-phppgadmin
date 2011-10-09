@@ -3,6 +3,9 @@ define phppgadmin::vhost(
   $domainalias = 'absent',
   $ssl_mode = 'force',
   $monitor_url = 'absent',
+  $run_mode = 'absent',
+  $run_uid = 'apache',
+  $run_gid = 'apache',
   $logmode = 'default'
 ){
   include ::phppgadmin::vhost::absent_webconfig
@@ -24,6 +27,9 @@ define phppgadmin::vhost(
     manage_webdir => false,
     path_is_webdir => true,
     ssl_mode => $ssl_mode,
+    run_mode => $run_mode,
+    run_uid => $run_uid,
+    run_gid => $run_gid,
     template_partial => 'phppgadmin/vhost/php_stuff.erb',
     require => Package['phppgadmin'],
     php_settings => {
