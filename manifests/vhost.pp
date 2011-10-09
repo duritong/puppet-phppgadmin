@@ -7,14 +7,15 @@ define phppgadmin::vhost(
 ){
   include ::phppgadmin::vhost::absent_webconfig
   include ::apache::vhost::php::global_exec_bin_dir
+  $documentroot = $operatingsystem ? {
+      gentoo => '/var/www/localhost/htdocs/phppgadmin',
+      default => '/usr/share/phpPgAdmin'
+    }
   apache::vhost::php::standard{$name:
     ensure => $ensure,
     domainalias => $domainalias,
     manage_docroot => false,
-    path => $operatingsystem ? {
-      gentoo => '/var/www/localhost/htdocs/phppgadmin',
-      default => '/usr/share/phpPgAdmin'
-    },
+    path => $documentroo,
     logpath => $operatingsystem ? {
       gentoo => '/var/log/apache2/',
       default => '/var/log/httpd'
@@ -25,7 +26,13 @@ define phppgadmin::vhost(
     ssl_mode => $ssl_mode,
     template_partial => 'phppgadmin/vhost/php_stuff.erb',
     require => Package['phppgadmin'],
-    php_settings => { safe_mode_exec_dir => "/var/www/php_safe_exec_bins/${name}" },
+    php_settings => {
+      open_basedir               => "${documentroot}/:/etc/phpPgAdmin/:/var/www/upload_tmp_dir/${name}/:/var/www/session.save_path/${name}/",
+      upload_tmp_dir             => "/var/www/upload_tmp_dir/${name}/",
+      'session.save_path'        => "/var/www/session.save_path/${name}",
+      safe_mode_allowed_env_vars => 'PHP_,PG',
+      safe_mode_exec_dir         => "/var/www/php_safe_exec_bins/${name}"
+    },
     php_options => { safe_mode_exec_bins => [ '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ] },
     mod_security => false,
   }
