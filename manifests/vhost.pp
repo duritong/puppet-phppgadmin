@@ -47,8 +47,8 @@ define phppgadmin::vhost(
     path_is_webdir => true,
     ssl_mode => $ssl_mode,
     run_mode => $run_mode,
-    run_uid => $run_uid,
-    run_gid => $run_gid,
+    run_uid => $name,
+    run_gid => $name,
     template_partial => 'apache/vhosts/php/partial.erb',
     require => Package['phppgadmin'],
     php_settings => {
