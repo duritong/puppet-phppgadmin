@@ -3,10 +3,9 @@
 #
 
 class phppgadmin {
-
-    case $operatingsystem {
+    case $::operatingsystem {
         gentoo: { include phppgadmin::gentoo }
         centos: { include phppgadmin::centos }
         default: { include phppgadmin::base }
     }
-}    
+}

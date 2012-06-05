@@ -9,7 +9,7 @@ define phppgadmin::vhost(
   $logmode = 'default'
 ){
 
-  $documentroot = $operatingsystem ? {
+  $documentroot = $::operatingsystem ? {
     gentoo => '/var/www/localhost/htdocs/phppgadmin',
     default => '/usr/share/phpPgAdmin'
   }
@@ -62,12 +62,12 @@ define phppgadmin::vhost(
     mod_security => false,
   }
 
-  if $use_nagios {
+  if hiera('use_nagios',false) {
     $real_monitor_url = $monitor_url ? {
       'absent' => $name,
       default => $monitor_url,
     }
-    nagios::service::http{"${real_monitor_url}":
+    nagios::service::http{$real_monitor_url:
       ensure => $ensure,
       ssl_mode => $ssl_mode,
     }

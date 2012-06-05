@@ -1,9 +1,8 @@
 class phppgadmin::gentoo inherits phppgadmin::base {
 
-    include webapp-config
+  require webapp_config
 
-    Package[phppgadmin]{
-        category => 'dev-db',
-        require => Package[webapp-config],
-    }
+  Package[phppgadmin]{
+    category => 'dev-db',
+  }
 }
