@@ -6,7 +6,8 @@ define phppgadmin::vhost(
   $run_mode = 'absent',
   $run_uid = 'apache',
   $run_gid = 'apache',
-  $logmode = 'default'
+  $logmode = 'default',
+  $manage_nagios = false,
 ){
 
   $documentroot = $::operatingsystem ? {
@@ -62,7 +63,7 @@ define phppgadmin::vhost(
     mod_security => false,
   }
 
-  if hiera('use_nagios',false) {
+  if $manage_nagios {
     $real_monitor_url = $monitor_url ? {
       'absent' => $name,
       default => $monitor_url,

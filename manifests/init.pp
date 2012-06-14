@@ -2,10 +2,12 @@
 # Copyright (C) 2007 admin@immerda.ch
 #
 
-class phppgadmin {
-    case $::operatingsystem {
-        gentoo: { include phppgadmin::gentoo }
-        centos: { include phppgadmin::centos }
-        default: { include phppgadmin::base }
-    }
+class phppgadmin(
+  $manage_shorewall = false
+) {
+  case $::operatingsystem {
+    gentoo: { include phppgadmin::gentoo }
+    centos: { include phppgadmin::centos }
+    default: { include phppgadmin::base }
+  }
 }
