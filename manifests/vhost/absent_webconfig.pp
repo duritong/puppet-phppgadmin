@@ -1,5 +1,5 @@
 class phppgadmin::vhost::absent_webconfig(
-  $manage_shorewall = false,
+  $manage_shorewall = false
 ) {
   class{'phppgadmin':
     manage_shorewall => $manage_shorewall
