@@ -7,7 +7,7 @@ define phppgadmin::vhost(
   $run_uid = 'apache',
   $run_gid = 'apache',
   $logmode = 'default',
-  $manage_nagios = false,
+  $manage_nagios = false
 ){
 
   $documentroot = $::operatingsystem ? {
