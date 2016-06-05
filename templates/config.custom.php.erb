@@ -1,0 +1,13 @@
+<?php
+<% @servers.each_with_index do |s,i| -%>
+  // <%= i %> <%= s['host'] %>
+  $conf['servers'][<%= i %>]['desc']            = '<%= s['desc'] || s['host'] %>';
+  $conf['servers'][<%= i %>]['host']            = '<%= s['host'] %>';
+  $conf['servers'][<%= i %>]['port']            = <%= s['port'] || 5432 %>;
+  $conf['servers'][<%= i %>]['sslmode']         = '<%= s['sslmode'] || 'allow' %>';
+  $conf['servers'][<%= i %>]['defaultdb']       = '<%= s['defaultdb'] || 'template1' %>';
+  $conf['servers'][<%= i %>]['pg_dump_path']    = '<%= s['pg_dump_path'] || '/usr/bin/pg_dump' %>';
+  $conf['servers'][<%= i %>]['pg_dumpall_path'] = '<%= s['pg_dumpall_path'] || '/usr/bin/pg_dumpall' %>';
+
+<% end -%>
+?>

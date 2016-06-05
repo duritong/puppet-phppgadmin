@@ -1,12 +1,9 @@
-class phppgadmin::vhost::absent_webconfig(
-  $manage_shorewall = false
-) {
-  class{'phppgadmin':
-    manage_shorewall => $manage_shorewall
-  }
+# make sure the config the package installs
+# is not anymore deployed
+class phppgadmin::vhost::absent_webconfig {
   file{'/etc/httpd/conf.d/phpPgAdmin.conf':
-    ensure => absent,
-    require => Package['phppgadmin'],
-    notify => Service['apache'],
+    ensure  => absent,
+    require => Package['phpPgAdmin'],
+    notify  => Service['apache'],
   }
 }

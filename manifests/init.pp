@@ -1,13 +1,24 @@
-# modules/phppgadmin/manifests/init.pp - manage phppgadmin stuff
-# Copyright (C) 2007 admin@immerda.ch
-#
-
+# manage the basis of a phppgadmin
 class phppgadmin(
-  $manage_shorewall = false
+  $servers = [
+    { 'host' => 'localhost' },
+  ],
 ) {
-  case $::operatingsystem {
-    gentoo: { include phppgadmin::gentoo }
-    centos: { include phppgadmin::centos }
-    default: { include phppgadmin::base }
+  include ::php
+  include ::php::extensions::pgsql
+  include ::postgres::client
+
+  package{'phpPgAdmin':
+    ensure  => installed,
+    require => Package['php','php-pgsql'],
+  } -> file{'/etc/phpPgAdmin/config.custom.php':
+    content => template('phppgadmin/config.custom.php.erb'),
+    owner   => root,
+    group   => 0,
+    mode    => '0444',
+  } -> file_line{'phppgadmin_config_include':
+    path  => '/etc/phpPgAdmin/config.inc.php',
+    line  => 'require(\'config.custom.php\');',
+    after => '.*conf\[\'version\'\] = .*',
   }
 }
