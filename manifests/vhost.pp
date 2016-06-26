@@ -9,6 +9,7 @@ define phppgadmin::vhost(
   $run_gid       = 'apache',
   $logmode       = 'default',
   $manage_nagios = false,
+  $configuration = {},
 ){
 
   $documentroot = '/usr/share/phpPgAdmin'
@@ -58,6 +59,7 @@ define phppgadmin::vhost(
     manage_webdir    => false,
     path_is_webdir   => true,
     ssl_mode         => $ssl_mode,
+    configuration    => $configuration,
     run_mode         => $run_mode,
     run_uid          => $name,
     run_gid          => $name,
