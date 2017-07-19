@@ -6,7 +6,11 @@ class phppgadmin(
 ) {
   include ::php
   include ::php::extensions::pgsql
-  include ::postgres::client
+  if versioncmp($::puppetversion,'4.0') >= 0 {
+    include ::postgresql::client
+  } else {
+    ensure_packages(['postgresql'])
+  }
 
   package{'phpPgAdmin':
     ensure  => installed,
