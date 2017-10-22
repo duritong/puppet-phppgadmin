@@ -32,8 +32,8 @@ define phppgadmin::vhost(
   include ::phppgadmin
   include ::phppgadmin::vhost::absent_webconfig
 
+  $additional_open_basedir = "/etc/phpPgAdmin/",
   $php_settings = {
-    'open_basedir'      => "${documentroot}/:/etc/phpPgAdmin/:/var/www/upload_tmp_dir/${name}/:/var/www/session.save_path/${name}/",
     'upload_tmp_dir'    => "/var/www/upload_tmp_dir/${name}/",
     'session.save_path' => "/var/www/session.save_path/${name}",
   }
@@ -42,10 +42,13 @@ define phppgadmin::vhost(
       'safe_mode_allowed_env_vars' => 'PHP_,PG',
       'safe_mode_exec_dir'         => "/var/www/php_safe_exec_bins/${name}",
     })
-    $php_options = { 'safe_mode_exec_bins' => [ '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ] }
+    $php_options = {
+      'safe_mode_exec_bins'   => [ '/usr/bin/pg_dump', '/usr/bin/pg_dumpall' ],
+      additional_open_basedir => $additional_open_basedir,
+    }
     include ::apache::vhost::php::global_exec_bin_dir
   } else {
-    $php_options = {}
+    $php_options = { additional_open_basedir => $additional_open_basedir }
     $real_php_settings = $php_settings
   }
   apache::vhost::php::standard{$name:
