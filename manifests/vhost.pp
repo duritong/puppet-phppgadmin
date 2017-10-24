@@ -52,25 +52,25 @@ define phppgadmin::vhost(
     $real_php_settings = $php_settings
   }
   apache::vhost::php::standard{$name:
-    ensure           => $ensure,
-    domainalias      => $domainalias,
-    manage_docroot   => false,
-    path             => $documentroot,
-    logpath          => '/var/log/httpd',
-    logprefix        => "${name}-",
-    logmode          => $logmode,
-    manage_webdir    => false,
-    path_is_webdir   => true,
-    ssl_mode         => $ssl_mode,
-    configuration    => $configuration,
-    run_mode         => $run_mode,
-    run_uid          => $name,
-    run_gid          => $name,
-    template_partial => 'apache/vhosts/php/partial.erb',
-    require          => Package['phpPgAdmin'],
-    php_settings     => $real_php_settings,
-    php_options      => $php_options,
-    mod_security     => false,
+    ensure             => $ensure,
+    domainalias        => $domainalias,
+    manage_docroot     => false,
+    path               => $documentroot,
+    logpath            => '/var/log/httpd',
+    logprefix          => "${name}-",
+    logmode            => $logmode,
+    manage_webdir      => false,
+    path_is_webdir     => true,
+    ssl_mode           => $ssl_mode,
+    configuration      => $configuration,
+    run_mode           => $run_mode,
+    run_uid            => $name,
+    run_gid            => $name,
+    template_partial   => 'apache/vhosts/php/partial.erb',
+    require            => Package['phpPgAdmin'],
+    php_settings       => $real_php_settings,
+    php_options        => $php_options,
+    mod_security       => false,
     additional_options => '<Directory /usr/share/phpPgAdmin/>
     <IfModule mod_authz_core.c>
       # Apache 2.4
@@ -83,7 +83,7 @@ define phppgadmin::vhost(
       Order Deny,Allow
       Allow from All
     </IfModule>
-  </Directory>'
+  </Directory>',
   }
 
   if $manage_nagios {
