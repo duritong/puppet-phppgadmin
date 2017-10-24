@@ -34,8 +34,8 @@ define phppgadmin::vhost(
 
   $additional_open_basedir = "/etc/phpPgAdmin/"
   $php_settings = {
-    'upload_tmp_dir'    => "/var/www/upload_tmp_dir/${name}/",
-    'session.save_path' => "/var/www/session.save_path/${name}",
+    'upload_tmp_dir'    => "/var/www/php_tmp/${name}/uploads",
+    'session.save_path' => "/var/www/php_tmp/${name}/sessions",
   }
   if versioncmp($::operatingsystemmajrelease,'7') < 0 {
     $real_php_settings = merge($php_settings, {
