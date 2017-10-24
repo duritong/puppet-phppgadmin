@@ -32,7 +32,7 @@ define phppgadmin::vhost(
   include ::phppgadmin
   include ::phppgadmin::vhost::absent_webconfig
 
-  $additional_open_basedir = "/etc/phpPgAdmin/",
+  $additional_open_basedir = "/etc/phpPgAdmin/"
   $php_settings = {
     'upload_tmp_dir'    => "/var/www/upload_tmp_dir/${name}/",
     'session.save_path' => "/var/www/session.save_path/${name}",
