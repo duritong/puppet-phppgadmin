@@ -14,7 +14,7 @@ define phppgadmin::vhost(
 
   $documentroot = '/usr/share/phpPgAdmin'
 
-  if ($run_mode == 'fcgid'){
+  if ($run_mode in ['fcgid','fpm']){
     if (($run_uid == 'absent') or ($run_gid == 'absent')) {
       fail("Need to configure \$run_uid and \$run_gid if you want to run Phppgadmin::Vhost[${name}] as fcgid.")
     }
@@ -27,6 +27,19 @@ define phppgadmin::vhost(
       shell      => '/sbin/nologin',
       homedir    => $documentroot,
       before     => Apache::Vhost::Php::Standard[$name],
+    }
+
+    user::groups::manage_user{
+      "apache_in_${name}":
+        ensure => $ensure,
+        group  => $name,
+        user   => 'apache',
+        notify => Service['apache'],
+    }
+    if $ensure == 'present' {
+      User::Groups::Manage_user["apache_in_${name}"]{
+        require => User::Managed[$name],
+      }
     }
   }
   include ::phppgadmin
