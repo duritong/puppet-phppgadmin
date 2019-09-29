@@ -15,6 +15,9 @@ class phppgadmin(
   package{'phpPgAdmin':
     ensure  => installed,
     require => Package['php','php-pgsql'],
+  } exec{'init-phppgadmin-config':
+    comand  => 'cp /etc/phpPgAdmin/config.inc.php-dist /etc/phpPgAdmin/config.inc.php',
+    creates => '/etc/phpPgAdmin/config.inc.php';
   } -> file{'/etc/phpPgAdmin/config.custom.php':
     content => template('phppgadmin/config.custom.php.erb'),
     owner   => root,
